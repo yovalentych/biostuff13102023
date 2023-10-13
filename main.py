@@ -10,6 +10,7 @@ print("4 - Find single mutation position (enter 4)")
 print("5 - Get mRNA/protein the sequence (enter 5)")
 print("6 - Check gene expression (enter 6)")
 print("7 - Create PCR project (enter 7)")
+print("8 - Go to pizda (enter 8)")
 numProgram = int(input("Chose the program: "))
 
 if numProgram == 1:
