@@ -3,38 +3,68 @@ from src import check_primers
 from src import mutation_position
 from src import translation
 
-print("1 - Check your primers (enter 1)")
-print("2 - Seq_complement (enter 2)")
-print("3 - Seq_reverse_complement (enter 3)")
-print("4 - Find single mutation position (enter 4)")
-print("5 - Get mRNA/protein the sequence (enter 5)")
-print("6 - Check gene expression (enter 6)")
-print("7 - Create PCR project (enter 7)")
-print("8 - Go to pizda (enter 8)")
-numProgram = int(input("Chose the program: "))
 
-if numProgram == 1:
-    seq_f = input("Введіть свою Forward послідовність: ").upper()
-    seq_r = input("Введіть свою Reverse послідовність: ").upper()
-
+# Функції для доступних опції
+def check_primers_option():
+    seq_f = input("Enter your Forward sequence: ").upper()
+    seq_r = input("Enter your Reverse sequence: ").upper()
     check_primers.checkPrimers(seq_f, seq_r)
-elif numProgram == 2:
-    res = seq_complement.getComplementSeq(input("Enter seq: ").upper())
+
+
+def seq_complement_option():
+    seq = input("Enter the sequence: ").upper()
+    res = seq_complement.getComplementSeq(seq)
     print(res)
-elif numProgram == 3:
-    res = seq_complement.getComplementSeq(input("Enter seq: ").upper())
+
+
+def seq_reverse_complement_option():
+    seq = input("Enter the sequence: ").upper()
+    res = seq_complement.getComplementSeq(seq)
     print(res[::-1])
-elif numProgram == 4:
-    seq1 = input("Введіть першу послідовність: ")
-    seq2 = input("Введіть другу послідовність: ")
+
+
+def find_mutation_position_option():
+    seq1 = input("Enter the first sequence: ")
+    seq2 = input("Enter the second sequence: ")
     res = mutation_position.getMutatedNucl(seq1, seq2)
-elif numProgram == 5:
-    # print(5)
-    # print("To get mRMA enter 51")
-    # print("To get protein enter 52")
-    # option = int(input("???: "))
-    # if(option == 51):
-    #     res = translation.proteinDB.get
-    res = translation.proteinDB(input("Введіть будь-ласка свою ДНК послідовність: "))
-else:
-    print("Error. Try again")
+
+
+def get_mrna_or_protein_option():
+    option = int(input("To get mRNA, enter 1. To get protein, enter 2: "))
+    if option == 1:
+        res = translation.proteinDB(input("Enter your DNA sequence: "))
+    elif option == 2:
+        # Handle protein retrieval here
+        pass
+
+
+# Create a dictionary to map program numbers to their respective functions
+program_options = {
+    1: check_primers_option,
+    2: seq_complement_option,
+    3: seq_reverse_complement_option,
+    4: find_mutation_position_option,
+    5: get_mrna_or_protein_option,
+}
+
+while True:
+    print("1 - Check your primers")
+    print("2 - Seq_complement")
+    print("3 - Seq_reverse_complement")
+    print("4 - Find single mutation position")
+    print("5 - Get mRNA/protein the sequence")
+    print("6 - Check gene expression")
+    print("7 - Create PCR project")
+    print("8 - Go to pizda")
+
+    numProgram = int(input("Choose the program (or enter 0 to exit): "))
+
+    if numProgram == 0:
+        break
+
+    # Check if the chosen program number exists in the dictionary
+    if numProgram in program_options:
+        # Execute the corresponding function
+        program_options[numProgram]()
+    else:
+        print("Invalid program number. Try again.")
